@@ -1,6 +1,5 @@
 # Test-fs-vscode
-
-## Come back to this readme for a different picture every day 
+Le F# practice project
+<img src="https://source.unsplash.com/daily>
 *thanks [unsplash](https://source.unsplash.com/)!*
 
-<img src="https://source.unsplash.com/daily>
