@@ -1,13 +1,10 @@
-// #load "LunoDotNET.fs"
-#reference "../packages/FSharp.Data/lib/net40/FSharp.Data.dll"
+open System
 
-// open LunoDotNET
-open FSharp.Data
-
-let tickerUrl = "https://api.mybitx.com/api/1/ticker?pair=XBTZAR"
-
-type Ticker = JsonProvider<"https://api.mybitx.com/api/1/ticker?pair=XBTZAR">
-
-let ticker = Ticker.Load(tickerUrl)
-
-let tickerDate = System.DateTimeOffset.FromUnixTimeMilliseconds(ticker.Timestamp).UtcDateTime
+let a_parser str =
+    if String.IsNullOrEmpty(str) then
+        (false, "")
+    else if str.[0] = 'a' then
+        let remaining = str.[1..]
+        (true, remaining)
+    else
+        (false,str)
