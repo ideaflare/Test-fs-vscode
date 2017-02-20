@@ -1,19 +1,17 @@
 open System
 
-let A_Parser str =
-    if String.IsNullOrEmpty(str) then
-        (false, "")
-    else if str.[0] = 'A' then
-        let remaining = str.[1..]
-        (true, remaining)
-    else
-        (false,str)
-
-let B_Parser str =
+let pchar (charToMatch, str) =
     let charListToString x = x |> List.toArray |> System.String
     if String.IsNullOrEmpty(str) then
-        (false, "")
+        let msg = "No more input"
+        (msg, "")
     else
         match (str |> Seq.toList) with
-        | 'B' :: rest -> (true, charListToString rest)
-        |  xs -> (false, charListToString xs)
+        | found :: remaining when found = charToMatch -> 
+            let msg = sprintf "Found %c" charToMatch
+            (msg, charListToString remaining)
+        | first :: _ ->
+            let msg = sprintf "Expecting '%c'. Got '%c'" charToMatch first
+            (msg,str)
+        | [] ->
+            ("Nothing there", str)
