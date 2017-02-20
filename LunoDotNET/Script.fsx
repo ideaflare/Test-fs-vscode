@@ -1,9 +1,9 @@
 open System
 
-let a_parser str =
+let A_Parser str =
     if String.IsNullOrEmpty(str) then
         (false, "")
-    else if str.[0] = 'a' then
+    else if str.[0] = 'A' then
         let remaining = str.[1..]
         (true, remaining)
     else
