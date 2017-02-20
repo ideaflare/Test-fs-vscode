@@ -10,8 +10,10 @@ let A_Parser str =
         (false,str)
 
 let B_Parser str =
+    let charListToString x = x |> List.toArray |> System.String
     if String.IsNullOrEmpty(str) then
         (false, "")
-    else match (str |> Seq.toList) with
-        | 'B' :: rest -> (true, System.String rest)
-        | no_b_found -> (false, System.String no_b_found)
+    else
+        match (str |> Seq.toList) with
+        | 'B' :: rest -> (true, charListToString rest)
+        |  xs -> (false, charListToString xs)
