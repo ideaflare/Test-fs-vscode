@@ -1,13 +1,18 @@
 open System
 
-let pcharx (charToMatch,str) =
-    let removeStringNull = function
+let toCharList nullableString =
+    let notNull = function
         | null -> ""
         | str -> str
-    match (removeStringNull str |> List.ofSeq) with
+    (notNull nullableString) |> List.ofSeq
+
+let charListToString chars = chars |> Array.ofList |> String
+
+let pcharx (charToMatch,str) =    
+    match (toCharList str) with
     | first :: remaining ->
         if (first = charToMatch)
-        then (sprintf "Found %c" charToMatch, remaining |> Array.ofList |> String)
+        then (sprintf "Found %c" charToMatch, remaining |> charListToString)
         else (sprintf "Expecting '%c'. Got '%c'" charToMatch first, str)
     | [] -> ("No more input", "")
 
