@@ -1,5 +1,9 @@
 open System
 
+type Result<'a> =
+    | Success of 'a
+    | Failure of string
+
 let toCharList nullableString =
     let notNull = function
         | null -> ""
