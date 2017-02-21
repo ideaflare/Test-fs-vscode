@@ -10,7 +10,7 @@ let toCharList nullableString =
         | str -> str
     (notNull nullableString) |> List.ofSeq
 
-let charListToString chars = chars |> Array.ofList |> String
+let charListToString = Array.ofList >> String
 
 let pcharx (charToMatch,str) =    
     match (toCharList str) with
