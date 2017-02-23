@@ -22,14 +22,13 @@ let pcharx (charToMatch,str) =
 
 let pchar (charToMatch,str) =
     if String.IsNullOrEmpty(str) then
-        let msg = "No more input"
-        (msg,"")
+        Failure "No more input"
     else 
         let first = str.[0] 
         if first = charToMatch then
             let remaining = str.[1..]
             let msg = sprintf "Found %c" charToMatch
-            (msg,remaining)
+            Success (charToMatch, remaining)
         else
             let msg = sprintf "Expecting '%c'. Got '%c'" charToMatch first
-            (msg,str)
+            Failure msg
