@@ -34,3 +34,6 @@ let pchar charToMatch str =
         else
             let msg = sprintf "Expecting '%c'. Got '%c'" charToMatch first
             Failure msg
+
+
+            // test push..
