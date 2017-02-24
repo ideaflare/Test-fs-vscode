@@ -12,15 +12,17 @@ let toCharList nullableString =
 
 let charListToString = Array.ofList >> String
 
-let pcharx (charToMatch,str) =    
+let pcharx charToMatch str =    
     match (toCharList str) with
     | first :: remaining ->
         if (first = charToMatch)
-        then (sprintf "Found %c" charToMatch, remaining |> charListToString)
-        else (sprintf "Expecting '%c'. Got '%c'" charToMatch first, str)
-    | [] -> ("No more input", "")
+        then Success (charToMatch, remaining |> charListToString)
+        else Failure (sprintf "Expecting '%c'. Got '%c'" charToMatch first)
+    | [] -> Failure "No more input"
 
-let pchar (charToMatch,str) =
+//-------------------------------------------------------------
+
+let pchar charToMatch str =
     if String.IsNullOrEmpty(str) then
         Failure "No more input"
     else 
