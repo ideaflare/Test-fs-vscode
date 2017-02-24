@@ -1,0 +1,6 @@
+
+Why would you create an return an inner function over a parameter ?
+when to prefer:
+    let f x y = ...
+and when to prefer:
+    let f x = fun y -> ...      
