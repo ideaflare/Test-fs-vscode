@@ -23,23 +23,6 @@ let pcharx charToMatch =
 
 //-------------------------------------------------------------
 
-<<<<<<< HEAD
-let pchar charToMatch str =
-    if String.IsNullOrEmpty(str) then
-        Failure "No more input"
-    else 
-        let first = str.[0] 
-        if first = charToMatch then
-            let remaining = str.[1..]
-            let msg = sprintf "Found %c" charToMatch
-            Success (charToMatch, remaining)
-        else
-            let msg = sprintf "Expecting '%c'. Got '%c'" charToMatch first
-            Failure msg
-
-
-            // test push..
-=======
 let pchar charToMatch =
     let innerFn str =
         if String.IsNullOrEmpty(str) then
@@ -54,4 +37,3 @@ let pchar charToMatch =
                 let msg = sprintf "Expecting '%c'. Got '%c'" charToMatch first
                 Failure msg
     innerFn
->>>>>>> 11b6b26b255ff329f7556bc1fde6b41a1432ffb2
