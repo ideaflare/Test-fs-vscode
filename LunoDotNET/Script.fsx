@@ -12,7 +12,8 @@ let toCharList nullableString =
 
 let charListToString = Array.ofList >> String
 
-let pcharx charToMatch str =    
+let pcharx charToMatch =
+    fun str ->    
     match (toCharList str) with
     | first :: remaining ->
         if (first = charToMatch)
@@ -22,15 +23,17 @@ let pcharx charToMatch str =
 
 //-------------------------------------------------------------
 
-let pchar charToMatch str =
-    if String.IsNullOrEmpty(str) then
-        Failure "No more input"
-    else 
-        let first = str.[0] 
-        if first = charToMatch then
-            let remaining = str.[1..]
-            let msg = sprintf "Found %c" charToMatch
-            Success (charToMatch, remaining)
-        else
-            let msg = sprintf "Expecting '%c'. Got '%c'" charToMatch first
-            Failure msg
+let pchar charToMatch =
+    let innerFn str =
+        if String.IsNullOrEmpty(str) then
+            Failure "No more input"
+        else 
+            let first = str.[0] 
+            if first = charToMatch then
+                let remaining = str.[1..]
+                let msg = sprintf "Found %c" charToMatch
+                Success (charToMatch, remaining)
+            else
+                let msg = sprintf "Expecting '%c'. Got '%c'" charToMatch first
+                Failure msg
+    innerFn
