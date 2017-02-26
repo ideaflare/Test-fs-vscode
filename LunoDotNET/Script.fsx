@@ -1,5 +1,3 @@
-module ParseEx
-
 open System
 
 type Result<'a> =

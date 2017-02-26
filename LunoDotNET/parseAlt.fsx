@@ -1,5 +1,7 @@
 #load "Script.fsx"
-open ParseEx
+// If you don't declare a module in fsx file, it implicitly creates a module the same name as file name. (Title Case)
+// http://stackoverflow.com/a/9545564
+open Script
 open System
 
 let toCharList nullableString =
