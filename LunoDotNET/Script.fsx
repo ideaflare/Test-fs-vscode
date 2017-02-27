@@ -5,8 +5,6 @@ type Result<'a> =
     | Failure of string
 
  type Parser<'r> = Parser of (string -> Result<'r * string>)
-// Also works @ Implementation 5
-// type Parser = Parser of (string -> Result<char * string>)
 
 //-------------------------------------------------------------
 
@@ -51,13 +49,9 @@ let orElse parser1 parser2 =
         | Failure _ -> run parser2 input            
     Parser innerFn
 
+let (<|>) = orElse
 
 let parseA = pchar 'A'
 let parseB = pchar 'B'
 let parseAThenB = parseA .>>. parseB
-
-run parseAThenB "ABThe rest"  // Success (('A', 'B'), "The rest")
-
-run parseAThenB "ZBC"  // Failure "Expecting 'A'. Got 'Z'"
-
-run parseAThenB "AZC"  // Failure "Expecting 'B'. Got 'Z'"
+let parseAOrB = parseA <|> parseB
