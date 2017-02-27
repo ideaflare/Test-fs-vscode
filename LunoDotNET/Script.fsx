@@ -53,5 +53,8 @@ let (<|>) = orElse
 
 let parseA = pchar 'A'
 let parseB = pchar 'B'
+let parseC = pchar 'C'
 let parseAThenB = parseA .>>. parseB
-let parseAOrB = parseA <|> parseB
+let parseBOrC = parseB <|> parseC
+let aAndThenBOrC = parseA .>>. parseBOrC
+run aAndThenBOrC "AcCAZOOKA"
