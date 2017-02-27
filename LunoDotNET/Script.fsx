@@ -43,6 +43,15 @@ let andThen parser1 parser2 =
 
 let (.>>.) = andThen
 
+let orElse parser1 parser2 =
+    let innerFn input =
+        let result1 = run parser1 input
+        match result1 with
+        | Success _ -> result1
+        | Failure _ -> run parser2 input            
+    Parser innerFn
+
+
 let parseA = pchar 'A'
 let parseB = pchar 'B'
 let parseAThenB = parseA .>>. parseB
