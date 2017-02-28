@@ -51,10 +51,16 @@ let orElse parser1 parser2 =
 
 let (<|>) = orElse
 
-let parseA = pchar 'A'
-let parseB = pchar 'B'
-let parseC = pchar 'C'
-let parseAThenB = parseA .>>. parseB
-let parseBOrC = parseB <|> parseC
-let aAndThenBOrC = parseA .>>. parseBOrC
-run aAndThenBOrC "AcCAZOOKA"
+let choice listOfParsers =
+    List.reduce (<|>) listOfParsers
+
+let anyOf listOfChars =
+    listOfChars
+    |> List.map pchar
+    |> choice
+
+let parseLowercase =
+    anyOf ['a'..'z']
+
+let parseDigit =
+    anyOf ['0'..'9']
