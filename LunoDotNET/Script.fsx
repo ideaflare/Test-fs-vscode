@@ -85,3 +85,7 @@ let parse3DigitsAsString =
 let parse3digitsAsInt =
     parse3DigitsAsString |>> int
 
+let returnP x =
+    let innerFn input =
+        Success (x, input)
+    Parser innerFn
