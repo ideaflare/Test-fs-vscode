@@ -77,3 +77,8 @@ let mapP f parser =
 
 let (<!>) = mapP
 let (|>>) parser f = mapP f parser
+
+let parse3DigitsAsString = 
+    parseDigit .>>. parseDigit .>>. parseDigit
+    |>> fun ((c1,c2),c3) -> String [|c1;c2;c3|]
+
