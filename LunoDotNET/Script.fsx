@@ -89,3 +89,10 @@ let returnP x =
     let innerFn input =
         Success (x, input)
     Parser innerFn
+
+let applyP fP xP =
+    fP .>>. xP
+    |>> (fun (f,x) -> f x)
+
+let (<*>) = applyP
+
