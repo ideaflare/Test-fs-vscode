@@ -64,3 +64,16 @@ let parseLowercase =
 
 let parseDigit =
     anyOf ['0'..'9']
+
+let mapP f parser =
+    let innerFn input =
+        let result = run parser input
+        match result with
+        | Failure err -> Failure err
+        | Success (value, remaining) ->
+            let newValue = f value
+            Success(newValue, remaining)
+    Parser innerFn
+
+let (<!>) = mapP
+let (|>>) parser f = mapP f parser
