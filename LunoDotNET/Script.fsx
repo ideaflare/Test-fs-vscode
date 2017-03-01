@@ -82,3 +82,6 @@ let parse3DigitsAsString =
     parseDigit .>>. parseDigit .>>. parseDigit
     |>> fun ((c1,c2),c3) -> String [|c1;c2;c3|]
 
+let parse3digitsAsInt =
+    parse3DigitsAsString |>> int
+
