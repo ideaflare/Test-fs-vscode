@@ -4,11 +4,9 @@
 open Script
 open System
 
-let toCharList nullableString =
-    let notNull = function
-        | null -> ""
-        | str -> str
-    (notNull nullableString) |> List.ofSeq
+let toCharList = function
+        | null -> []
+        | str -> str |> List.ofSeq
 
 let charListToString = Array.ofList >> String
 

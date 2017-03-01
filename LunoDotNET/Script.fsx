@@ -16,7 +16,7 @@ let pchar charToMatch =
             let first = str.[0] 
             if first = charToMatch then
                 let remaining = str.[1..]
-                let msg = sprintf "Found %c" charToMatch
+                let _msg = sprintf "Found %c" charToMatch
                 Success (charToMatch, remaining)
             else
                 let msg = sprintf "Expecting '%c'. Got '%c'" charToMatch first
