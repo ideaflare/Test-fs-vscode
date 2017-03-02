@@ -78,12 +78,10 @@ let mapP f parser =
 let (<!>) = mapP
 let (|>>) parser f = mapP f parser
 
-let parse3DigitsAsString = 
+let parse3digitsAsInt = 
     parseDigit .>>. parseDigit .>>. parseDigit
     |>> fun ((c1,c2),c3) -> String [|c1;c2;c3|]
-
-let parse3digitsAsInt =
-    parse3DigitsAsString |>> int
+    |>> int
 
 let returnP x =
     let innerFn input =
@@ -96,3 +94,5 @@ let applyP fP xP =
 
 let (<*>) = applyP
 
+let lift2 f xP yP =
+    returnP f <*> xP <*> yP
