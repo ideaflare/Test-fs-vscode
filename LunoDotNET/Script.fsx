@@ -110,4 +110,9 @@ let liiift f xP yP =
     let fxP = fP .>>. xP |>> (fun (plus, x) -> plus x)
     fxP .>>. yP |>> (fun (plusX, y) -> plusX y)
 
+let addP = lift2 (+)
+
+let startsWith (str:string) prefix =
+    str.StartsWith(prefix)
+
     
