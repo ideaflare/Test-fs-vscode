@@ -96,3 +96,18 @@ let (<*>) = applyP
 
 let lift2 f xP yP =
     returnP f <*> xP <*> yP
+    
+let lx2 f xP yP =
+    (applyP ( applyP (returnP f) xP) yP)
+
+let liift f xP yP =
+    let fP = returnP f // changes + to Parser<+>
+    let i1 = applyP fP xP // changes Parser<+> x to Parser<+ x>
+    applyP i1 yP // changes Parser <+ x> Parser<y> to Parser<z> ie resut of (x+y)
+
+let liiift f xP yP =
+    let fP = Parser (fun input -> Success (f, input))
+    let fxP = fP .>>. xP |>> (fun (plus, x) -> plus x)
+    fxP .>>. yP |>> (fun (plusX, y) -> plusX y)
+
+    
