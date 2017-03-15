@@ -115,4 +115,12 @@ let addP = lift2 (+)
 let startsWith (str:string) prefix =
     str.StartsWith(prefix)
 
+let startsWithP = lift2 startsWith
+
+let rec sequence parserList =
+    let cons head tail = head :: tail
+    let consP = lift2 cons
+    match parserList with
+    | [] -> returnP []
+    | head :: tail -> consP head (sequence tail)
     
