@@ -123,4 +123,21 @@ let rec sequence parserList =
     match parserList with
     | [] -> returnP []
     | head :: tail -> consP head (sequence tail)
-    
+
+let parsers = [pchar 'A';pchar 'B';pchar 'C']
+let combined = sequence parsers
+
+run combined "ABCD"
+
+let charListToString = Array.ofList >> String
+
+let pstring str =
+    str
+    |> List.ofSeq
+    |> List.map pchar
+    |> sequence
+    |> mapP charListToString
+
+let parseABC = pstring "ABC"
+run parseABC "TEST"
+run parseABC "ABCDEF"
