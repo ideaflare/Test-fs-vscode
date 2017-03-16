@@ -141,3 +141,30 @@ let pstring str =
 let parseABC = pstring "ABC"
 run parseABC "TEST"
 run parseABC "ABCDEF"
+
+let rec parseZeroOrMore parser input =
+    let firstResult = run parser input
+    match firstResult with
+    | Failure err -> ([], input)
+    | Success (firstValue, inputAfterFirstParse) ->
+        let (subsequentValues, remainingInput) =
+            parseZeroOrMore parser inputAfterFirstParse
+        let values = firstValue :: subsequentValues
+        (values, remainingInput)
+
+let many parser =
+    let rec innerFn input =
+        Success (parseZeroOrMore parser input)
+    Parser innerFn
+
+let many1 parser =
+    let rec innerFn input =
+        let firstResult = run parser input
+        match firstResult with
+        | Failure err -> Failure err
+        | Success (firstValue, inputAfterFirstParse) ->
+            let (subsequentValues, remainingInput) =
+                parseZeroOrMore parser inputAfterFirstParse
+            let values = firstValue :: subsequentValues
+            Success (values, remainingInput)
+    Parser innerFn
