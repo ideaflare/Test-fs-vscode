@@ -10,3 +10,5 @@ and when to prefer:
 3. is (symbol) always infix operator of form: parameter1 infix parameter2 ?
 
 4. Wouldn't andThen have been much simpler if the Parser extracted a String (easily combinable with another parser success)
+
+5. Why does `many` and `many` have the rec keyword ? They seem to work without it
