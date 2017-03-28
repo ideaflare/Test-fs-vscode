@@ -12,3 +12,5 @@ and when to prefer:
 4. Wouldn't andThen have been much simpler if the Parser extracted a String (easily combinable with another parser success)
 
 5. Why does `many` and `many` have the rec keyword ? They seem to work without it
+
+6. In FSI typing (Parser;;) gives the type definition, how do you do the same for (Result;;) ?
