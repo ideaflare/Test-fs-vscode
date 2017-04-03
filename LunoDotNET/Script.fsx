@@ -169,7 +169,11 @@ let many1 parser =
             Success (values, remainingInput)
     Parser innerFn
 
-let digit = anyOf ['1'..'9']
+let digit = anyOf ['0'..'9']
 let digits = many1 digit
 run digits "34431test"
 run digits "t"
+
+let pint =
+    let resultToInt digitList = String(List.toArray digitList) |> int
+    digits |>> resultToInt
