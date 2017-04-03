@@ -96,19 +96,20 @@ let (<*>) = applyP
 
 let lift2 f xP yP =
     returnP f <*> xP <*> yP
+
+let liftPff f xP yP =
+    let pF = returnP f // changes + to Parser<+>
+    let pFxBakedIn = applyP pF xP // takes (Parser<+> x) and spits out (Parser<+ x>)
+    applyP pFxBakedIn yP //applies Parser<funtion that needs 1 input> and spits out Parser<'c>
     
 let lx2 f xP yP =
     (applyP ( applyP (returnP f) xP) yP)
 
-let liift f xP yP =
-    let fP = returnP f // changes + to Parser<+>
-    let i1 = applyP fP xP // changes Parser<+> x to Parser<+ x>
-    applyP i1 yP // changes Parser <+ x> Parser<y> to Parser<z> ie resut of (x+y)
-
 let liiift f xP yP =
-    let fP = Parser (fun input -> Success (f, input))
-    let fxP = fP .>>. xP |>> (fun (plus, x) -> plus x)
-    fxP .>>. yP |>> (fun (plusX, y) -> plusX y)
+    let (||>>) fP xP = applyP fP xP
+    returnP f
+    ||>> xP
+    ||>> yP // operators can be tricky at first, but very concise if you know them
 
 let addP = lift2 (+)
 
