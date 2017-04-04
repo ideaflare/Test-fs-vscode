@@ -193,3 +193,12 @@ let pintNeg =
         | None -> i
     opt (pchar '-') .>>. digits
     |>> resultToInt
+
+let (>>.) p1 p2 = p1 .>>. p2 |>> (fun (a, b) -> b)
+let (.>>) p1 p2 = p1 .>>. p2 |>> (fun (a, b) -> a)
+
+let whitespace = many1 (anyOf [' ';'\t';'\n'])
+
+let ab = pstring "ab"
+let cd = pstring "cd"
+let ab_cd = (ab .>> whitespace) .>>. cd
