@@ -177,3 +177,19 @@ run digits "t"
 let pint =
     let resultToInt digitList = String(List.toArray digitList) |> int
     digits |>> resultToInt
+
+let opt p =
+    let some = p |>> Some
+    let none = returnP None
+    some <|> none
+
+let charListToInt = Array.ofList >> String >> int
+
+let pintNeg =
+    let resultToInt (sign, chars) =
+        let i = chars |> charListToInt
+        match sign with
+        | Some _ -> -i
+        | None -> i
+    opt (pchar '-') .>>. digits
+    |>> resultToInt
