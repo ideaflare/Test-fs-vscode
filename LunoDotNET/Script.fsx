@@ -202,3 +202,6 @@ let whitespace = many1 (anyOf [' ';'\t';'\n'])
 let ab = pstring "ab"
 let cd = pstring "cd"
 let ab_cd = (ab .>> whitespace) .>>. cd
+
+let between p1 p2 p3 =
+    p1 >>. p2 .>> p3
