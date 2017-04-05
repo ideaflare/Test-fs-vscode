@@ -213,3 +213,13 @@ let sepBy1 p sep =
 
 let sepBy p sep =
     sepBy1 p sep <|> returnP []
+
+let bindP f p =
+    let innerFn input =
+        let result1 = run p input
+        match result1 with
+        | Failure err -> Failure err
+        | Success (value, remainingInput) ->
+            let p2 = f value
+            run p2 remainingInput
+    Parser innerFn
