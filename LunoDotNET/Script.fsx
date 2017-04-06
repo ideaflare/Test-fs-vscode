@@ -27,6 +27,23 @@ let run parser str =
     let (Parser innerFn) = parser
     innerFn str
 
+let bindP f p =
+    let innerFn input =
+        let result1 = run p input
+        match result1 with
+        | Failure err -> Failure err
+        | Success (value, remainingInput) ->
+            let p2 = f value
+            run p2 remainingInput
+    Parser innerFn
+
+(>>=) p f = bindP f p
+
+let _andThen p1 p2 =
+    p1 >>== (fun r1 ->
+    p2 >>== (fun r2 ->
+    returnP (r1,r2)))
+
 let andThen parser1 parser2 =
     let innerFn input =
         match (run parser1 input) with
@@ -213,13 +230,3 @@ let sepBy1 p sep =
 
 let sepBy p sep =
     sepBy1 p sep <|> returnP []
-
-let bindP f p =
-    let innerFn input =
-        let result1 = run p input
-        match result1 with
-        | Failure err -> Failure err
-        | Success (value, remainingInput) ->
-            let p2 = f value
-            run p2 remainingInput
-    Parser innerFn
