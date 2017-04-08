@@ -37,7 +37,7 @@ let bindP f p =
             run p2 remainingInput
     Parser innerFn
 
-(>>=) p f = bindP f p
+let (>>=) p f = bindP f p
 
 let returnP x =
     let innerFn input =
@@ -45,8 +45,8 @@ let returnP x =
     Parser innerFn
 
 let _andThen p1 p2 =
-    p1 >>== (fun r1 ->
-    p2 >>== (fun r2 ->
+    p1 >>= (fun r1 ->
+    p2 >>= (fun r2 ->
     returnP (r1,r2)))
 
 let andThen parser1 parser2 =
@@ -86,6 +86,9 @@ let parseLowercase =
 
 let parseDigit =
     anyOf ['0'..'9']
+
+let _mapP f =
+    bindP (f >> returnP)
 
 let mapP f parser =
     let innerFn input =
