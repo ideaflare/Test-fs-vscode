@@ -39,6 +39,11 @@ let bindP f p =
 
 (>>=) p f = bindP f p
 
+let returnP x =
+    let innerFn input =
+        Success (x, input)
+    Parser innerFn
+
 let _andThen p1 p2 =
     p1 >>== (fun r1 ->
     p2 >>== (fun r2 ->
@@ -99,11 +104,6 @@ let parse3digitsAsInt =
     parseDigit .>>. parseDigit .>>. parseDigit
     |>> fun ((c1,c2),c3) -> String [|c1;c2;c3|]
     |>> int
-
-let returnP x =
-    let innerFn input =
-        Success (x, input)
-    Parser innerFn
 
 let applyP fP xP =
     fP .>>. xP
